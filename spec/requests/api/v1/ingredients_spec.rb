@@ -13,7 +13,7 @@ RSpec.describe "API::V1::Ingredients", type: :request do
   end
 
   describe "POST /api/v1/items/:item_id/ingredients" do
-    let(:params) { {ingredient: { name: "Sugar", quantity: "500 gms" } } }
+    let(:params) { { ingredient: { name: "Sugar", quantity: "500 gms" } } }
     let(:invalid_params) { { ingredient: { name: "", quantity: "" } } }
 
     it "creates a new ingredient" do

@@ -19,7 +19,7 @@ RSpec.describe "API::V1::Items", type: :request do
 
   describe "POST /api/v1/stores/:store_id/items" do
     let(:params) { { item: { name: "Item test", price: 15.89, description: "test product" } } }
-    let(:invalid_params){ { item: { name: "", price: "", description: "" } } }
+    let(:invalid_params) { { item: { name: "", price: "", description: "" } } }
 
     it "creates a new item" do
       expect {

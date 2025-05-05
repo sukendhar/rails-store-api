@@ -69,4 +69,17 @@ RSpec.describe 'Stores API', type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'GET /api/v1/stores/:id/items_count' do
+    it 'returns the count of items for a store' do
+      get "/api/v1/stores/#{store_id}/items_count"
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)['items_count']).to eq(0)
+    end
+
+    it 'returns 404 not_found for invalid Store ID ' do
+      get "/api/v1/stores/70009/items_count"
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

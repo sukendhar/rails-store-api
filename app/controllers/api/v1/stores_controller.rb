@@ -1,5 +1,5 @@
 class Api::V1::StoresController < ApplicationController
-  before_action :set_store, only: %i[show update destroy]
+  before_action :set_store, only: %i[show update destroy items_count]
 
   def index
     render json: Store.all, status: :ok
@@ -29,6 +29,12 @@ class Api::V1::StoresController < ApplicationController
   def destroy
     @store.destroy
     head :no_content
+  end
+
+  def items_count
+    render json: { items_count: @store.items.count }, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Store not found" }, status: :not_found
   end
 
   private

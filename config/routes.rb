@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :stores do
+        get "items_count", on: :member
         resources :items, shallow: true do
           resources :ingredients, shallow: true
         end
