@@ -12,6 +12,9 @@ class Api::V1::StoresController < ApplicationController
   def create
     store = Store.new(store_params)
     if store.save
+      # Enqueue the job to send notification email
+      StoreNotifyJob.perform_later(store.id)
+
       render json: store, status: :created
     else
       render json: { errors: store.errors.full_messages }, status: :unprocessable_entity
