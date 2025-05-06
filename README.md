@@ -27,6 +27,7 @@ docker-compose up --build
 ```
 
 ### 2. Create and Migrate Database
+After the services are up, you need to create, migrate and seed the database. You can do this by executing the following command in new terminal:
 
 ```bash
 docker-compose exec backend bin/rails db:create db:migrate db:seed
