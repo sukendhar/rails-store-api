@@ -52,3 +52,5 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
 end
+
+gem "rack-cors", "~> 2.0"
