@@ -18,6 +18,22 @@ This is the backend API built with Ruby on Rails 8. It exposes RESTful endpoints
 
 ---
 
+## Prerequisites
+```bash
+git clone https://github.com/sukendhar/rails-store-api.git
+git clone https://github.com/sukendhar/react-store-ui.git
+```
+
+To install react-scripts along with other packages from package.json from `react-sore-ui` app.
+```bash
+cd react-store-ui
+npm install 
+```
+then goto 
+```bash
+cd rails-store-api
+```
+
 ## Docker Setup
 
 ### 1. Build and Start Services
@@ -37,13 +53,6 @@ docker-compose exec backend bin/rails db:create db:migrate db:seed
 
 - Rails API: [http://localhost:3000](http://localhost:3000)
 
-### Rspec Tests in Docker
-To run the tests for models and controllers, use the following command:
-
-```bash
-docker-compose exec backend bin/rspec
-```
----
 
 ## Setup (Without Docker)
 
@@ -54,8 +63,9 @@ bundle install
 rails db:create db:migrate db:seed
 rails s
 ```
+
 ### Rspec Tests in local
-To run the tests for models and controllers, use the following command:
+As docker running in production mode, So we can not run rsec test in docker. Run the tests in local, use the following command:
 
 ```bash
 bundle exec rspec
@@ -95,3 +105,16 @@ bundle exec rspec
 - `GET /ingredients/:id`
 - `PUT /ingredients/:id`
 - `DELETE /ingredients/:id`
+
+### Screenshots
+
+### Rspec tests
+![Store API](public/Rspec_tests.png)
+
+### Sidekiq sending notification
+![Sidekiq](public/sidekiq.png)
+
+### API responses
+![Stores API](public/store_api.png)
+![Items API](public/items_api.png)
+![Ingredients API](public/ingredients_api.png)
