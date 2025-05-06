@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  post "/signup", to: "authentication#signup"
+  post "/login",  to: "authentication#login"
+
   namespace :api do
     namespace :v1 do
       resources :stores do
