@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "API::V1::Ingredients", type: :request do
+  let(:user) { create(:user) }
+  let(:headers) { auth_headers(user) }
   let(:item) { create(:item) }
   let!(:ingredients) { create_list(:ingredient, 2, item: item) }
 
   describe "GET /api/v1/items/:item_id/ingredients" do
     it "returns all ingredients for an item" do
-      get "/api/v1/items/#{item.id}/ingredients"
+      get "/api/v1/items/#{item.id}/ingredients", headers: headers
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body).size).to eq(2)
     end
@@ -18,13 +20,13 @@ RSpec.describe "API::V1::Ingredients", type: :request do
 
     it "creates a new ingredient" do
       expect {
-        post "/api/v1/items/#{item.id}/ingredients", params: params
+        post "/api/v1/items/#{item.id}/ingredients", params: params.to_json, headers: headers
       }.to change(Ingredient, :count).by(1)
       expect(response).to have_http_status(:created)
     end
 
     it "returns error for invalid params" do
-      post "/api/v1/items/#{item.id}/ingredients", params: invalid_params
+      post "/api/v1/items/#{item.id}/ingredients", params: invalid_params.to_json, headers: headers
       expect(response).to have_http_status(:unprocessable_entity)
       expect(JSON.parse(response.body)['errors']).to include("Name can't be blank", "Quantity can't be blank")
     end
@@ -34,13 +36,13 @@ RSpec.describe "API::V1::Ingredients", type: :request do
     let(:ingredient) { ingredients.first }
 
     it "updates an ingredient successfully" do
-      patch "/api/v1/ingredients/#{ingredient.id}", params: { ingredient: { name: "Updated ingredient name" } }
+      patch "/api/v1/ingredients/#{ingredient.id}", params: { ingredient: { name: "Updated ingredient name" } }.to_json, headers: headers
       expect(response).to have_http_status(:ok)
       expect(ingredient.reload.name).to eq("Updated ingredient name")
     end
 
     it "returns 404 not_found for non existent ingredient" do
-      patch "/api/v1/ingredients/700007", params: { ingredient: { name: "Does not exist" } }
+      patch "/api/v1/ingredients/700007", params: { ingredient: { name: "Does not exist" } }.to_json, headers: headers
       expect(response).to have_http_status(:not_found)
     end
   end
@@ -50,13 +52,13 @@ RSpec.describe "API::V1::Ingredients", type: :request do
 
     it "removes the ingredient from the database and returns 204 no_content" do
       expect {
-        delete "/api/v1/ingredients/#{ingredient_to_delete.id}"
+        delete "/api/v1/ingredients/#{ingredient_to_delete.id}", headers: headers
       }.to change(Ingredient, :count).by(-1)
       expect(response).to have_http_status(:no_content)
     end
 
     it "returns 404 not_found for non existent ingredient" do
-      delete "/api/v1/ingredients/700008"
+      delete "/api/v1/ingredients/700008", headers: headers
       expect(response).to have_http_status(:not_found)
     end
   end
