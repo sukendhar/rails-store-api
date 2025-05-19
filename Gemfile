@@ -53,6 +53,6 @@ group :development, :test do
   gem "shoulda-matchers"
 end
 
-gem "rack-cors", "~> 2.0"
+gem "rack-cors", "~> 3.0"
 gem "jwt"
 gem "bcrypt"
